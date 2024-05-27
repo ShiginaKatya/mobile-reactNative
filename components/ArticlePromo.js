@@ -6,9 +6,9 @@ export default function ArticlePromo() {
     <View style={styles.article}>
         <Image style={styles.banner_image} source={require('../assets/article_promo.png')} />
         <View style={styles.article_block} >
-            <Text style={styles.article_theme}>zero waste - пластик</Text>
+            <Text style={styles.article_theme}>route.params.datatitle</Text>
             <Text style={styles.article_title}>Как уменьшить {'\n'}количество{'\n'}пластика в жизни? </Text>
-            <Text style={styles.article_author}>Шигина Екатерина</Text>
+            <Text style={styles.article_author}>route.params.desc</Text>
         </View>
      </View>   
   );
