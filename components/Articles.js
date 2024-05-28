@@ -48,7 +48,9 @@ export default function Articles({navigation}) {
  
   return ( 
     <View style={styles.container}> 
-      <SafeAreaView style={styles.container}>   
+      <SafeAreaView style={styles.container}> 
+        <Image style={styles.logo} source={require('../assets/plant_2820715 1.png')} /> 
+        <Text style={styles.text_title}>Статьи</Text>   
         <FlatList data={data} renderItem={({item}) =>( 
           <TouchableOpacity onPress={()=> navigation.navigate('Article', item)}> 
             <View style={styles.article}> 
@@ -79,6 +81,19 @@ const styles = StyleSheet.create({
     color: 'green',
     justifyContent: 'center',
     paddingTop: 20
+  },
+  text_title: {
+    color: 'green',
+    textAlign: 'center',
+    padding: 10,
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    marginHorizontal: 'auto',
+    marginTop: 10
   },
   article: {
     width: 350,

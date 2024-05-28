@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, ScrollView, } from 'react-native';
+import { View, TextInput, Button, StyleSheet, ScrollView, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function AddArticle({ navigation }){
   const [title, setTitle] = useState('');
@@ -9,8 +10,34 @@ export default function AddArticle({ navigation }){
   const [text, setText] = useState('');
   const [author, setAuthor] = useState('');
   const [advices, setAdvices] = useState([]);
-  const [promo, setPromo] = useState('https://i.pinimg.com/474x/3c/9f/32/3c9f328f15f0bb980c163265fe0ee9e9.jpg'); // Задаем постоянное значение для изображения
+  const [promo, setPromo] = useState('https://i.pinimg.com/474x/3c/9f/32/3c9f328f15f0bb980c163265fe0ee9e9.jpg'); 
   const [articles, setArticles] = useState([]);
+
+  const handleImagePicker = async () => {
+    try {
+      // Запрашиваем разрешение на доступ к медиафайлам
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Необходимо разрешение на доступ к фото и медиафайлам');
+        return;
+      }
+
+      // Открываем медиа-пикер
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.cancelled) {
+        setPromo(result.assets[0].uri);
+      }
+    } catch (error) {
+      console.error('Ошибка при выборе изображения:', error);
+    }
+  };
+
   const handleSaveArticle = async () => {
     try {
       // Получаем существующие статьи из AsyncStorage
@@ -39,6 +66,7 @@ export default function AddArticle({ navigation }){
       setText('');
       setTheme('');
       setAuthor('')
+      setPromo('https://i.pinimg.com/474x/3c/9f/32/3c9f328f15f0bb980c163265fe0ee9e9.jpg');
       setAdvices('');
       // Переходим обратно на главный экран
       navigation.goBack();
@@ -80,6 +108,8 @@ export default function AddArticle({ navigation }){
         value={author}
         onChangeText={setAuthor}
       />
+      {promo && <Image source={{ uri: promo }} style={styles.image} />}
+      <Button color={'green'} title="Выбрать изображение" onPress={handleImagePicker} />
       <TextInput
         style={[styles.input, styles.contentInput]}
         placeholder="Советы (разделяйте запятыми)"
@@ -104,7 +134,14 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 16,
   },
+  image: {
+    width: 200,
+    height: 200,
+    marginHorizontal: 'auto',
+    marginVertical: 10,
+  },
   contentInput: {
-    height: 150,
+    height: 100,
+    marginTop: 10
   },
 });
