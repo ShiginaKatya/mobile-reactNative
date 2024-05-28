@@ -3,6 +3,8 @@ import Main from "./components/Main";
 import Start from "./components/Start";
 import Article from "./components/Article";
 import Articles from "./components/Articles"
+import AddArticle from "./components/AddArticle"
+
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -31,6 +33,11 @@ export default function Navigate() {
                 name="Article"
                 component={Article}
                 options={{title: 'Статья'}}
+             />
+            <Stack.Screen
+                name="AddArticle"
+                component={AddArticle}
+                options={{title: 'Добавить статью'}}
              />
         </Stack.Navigator>
     </NavigationContainer>

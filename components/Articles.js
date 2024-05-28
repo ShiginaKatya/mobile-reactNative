@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
-import ArticlePromo from './ArticlePromo';
+import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TouchableOpacity, Button } from 'react-native';
 import React, { useEffect, useState, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
@@ -10,33 +9,42 @@ import json_response from '../response/articles.js';
 
 export default function Articles({navigation}) { 
    
-  const [data, setData] = useState([]); ; 
-   
- 
-    const fetchDataFromStorage = async () => { 
-        try { 
-            const storedData = await AsyncStorage.getItem('data'); 
- 
-            if (storedData !== null) { 
-                setData(JSON.parse(storedData)); 
-                console.log(storedData) 
-            } 
-        } catch (error) { 
-            console.error('error', error); 
-        } 
-    }; 
-    useEffect(() => { 
-      (async () => { 
-        await AsyncStorage.setItem('data',JSON.stringify(json_response.data)); 
-        await fetchDataFromStorage();  
-      })() 
-    }, []); 
+    // Состояние для хранения данных, полученных из AsyncStorage
+  const [data, setData] = useState([]);
 
-    useFocusEffect( 
-          useCallback(() => { 
-              fetchDataFromStorage();  
-          }, []) 
-      ); 
+  // Функция для получения данных из AsyncStorage
+  const fetchDataFromStorage = async () => {
+    try {
+      // Получаем данные из AsyncStorage
+      const storedData = await AsyncStorage.getItem('data');
+
+      // Если данные есть, обновляем состояние
+      if (storedData !== null) {
+        setData(JSON.parse(storedData));
+        console.log(storedData);
+      }
+    } catch (error) {
+      // Обрабатываем ошибки
+      console.error('error', error);
+    }
+  };
+
+  // При первом рендере компонента сохраняем данные из json_response.data в AsyncStorage
+  useEffect(() => {
+    (async () => {
+      await AsyncStorage.setItem('data', JSON.stringify(json_response.data));
+      // загрузить данные из AsyncStorage
+      // await fetchDataFromStorage();
+    })();
+  }, []);
+
+  // Подписка на событие активации экрана (когда пользователь переходит на этот экран)
+  useFocusEffect(
+    useCallback(() => {
+      // Загружаем данные из AsyncStorage при активации экрана
+      fetchDataFromStorage();
+    }, [])
+  );  
  
   return ( 
     <View style={styles.container}> 
@@ -56,6 +64,7 @@ export default function Articles({navigation}) {
             </View>  
           </TouchableOpacity> 
         )} /> 
+        <Button color={'green'} title='Добавить' onPress={()=> navigation.navigate('AddArticle')} />
         <StatusBar style="auto" /> 
       </SafeAreaView> 
     </View> 

@@ -1,26 +1,69 @@
 import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button, SafeAreaView, ScrollView } from 'react-native';
+import {AsyncStorage} from '@react-native-async-storage/async-storage';
 
 export default function Article({route}) {
+  // Извлекаем параметры статьи из навигационного маршрута
+  const { title, partitle, text, theme, author, promo, advices } = route.params;
+
+  // Создаем состояние для хранения текущей статьи
+  const [article, setArticle] = useState({ title, partitle, text, theme, author, promo, advices });
+
+  // При монтировании компонента или изменении заголовка статьи
+  useEffect(() => {
+    // Функция для загрузки статьи из AsyncStorage
+    const loadArticle = async () => {
+      try {
+        // Получаем данные из AsyncStorage
+        const storedData = await AsyncStorage.getItem('data');
+        if (storedData !== null) {
+          // Парсим данные из AsyncStorage
+          const articles = JSON.parse(storedData);
+          // Находим статью с соответствующим заголовком
+          const currentArticle = articles.find((art) => art.title === title);
+          // Обновляем состояние с найденной статьей
+          setArticle(currentArticle);
+        }
+      } catch (error) {
+        // Обрабатываем ошибки
+        console.error('Error loading article:', error);
+      }
+    };
+
+    // Если статья еще не загружена или заголовок статьи изменился, загружаем статью
+    if (!article || article.title !== title) {
+      loadArticle();
+    }
+  }, [article, title]);
+
+  // Если статья еще не загружена, показываем загрузку
+  if (!article) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
   return (
     <ScrollView style={styles.container}>
         <SafeAreaView style={styles.container}> 
             <Image style={styles.article_image} source={{
-              uri: route.params.promo
+              uri: article.promo
             }} />
             <View style={styles.article_block}>
-                <Text style={styles.article_title}>{route.params.title}</Text>
-                <Text style={styles.article_theme}>{route.params.theme}</Text>
-                <Text style={styles.article_group}>{route.params.partitle}</Text>
-                <Text style={styles.article_text}>{route.params.text}</Text>
+                <Text style={styles.article_title}>{article.title}</Text>
+                <Text style={styles.article_theme}>{article.theme}</Text>
+                <Text style={styles.article_group}>{article.partitle}</Text>
+                <Text style={styles.article_text}>{article.text}</Text>
                 <Text style={styles.article_group}>СОВЕТЫ</Text>
                 <View style={styles.advice}>
                     <Image style={styles.advice_image} source={require('../assets/icon_advice.png')} />
-                    <Text style={styles.advice_text}>{route.params.advices[0]}</Text>
+                    <Text style={styles.advice_text}>{article.advices[0]}</Text>
                 </View>
                 <View style={styles.advice}> 
                     <Image style={styles.advice_image} source={require('../assets/icon_advice.png')} />
-                    <Text style={styles.advice_text}>{route.params.advices[1]}</Text>
+                    <Text style={styles.advice_text}>{article.advices[1]}</Text>
                 </View>
             </View>
             <StatusBar style="auto" />
