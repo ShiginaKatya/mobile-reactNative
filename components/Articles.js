@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import json_response from '../response/articles.js';
+import BetterButton from './platform_component/BetterButton'
 
 
 
@@ -67,7 +68,7 @@ export default function Articles({navigation}) {
             </View>  
           </TouchableOpacity>
         )} /> 
-        <Button style={styles.button_style} color={'green'} title='Добавить' onPress={()=> navigation.navigate('AddArticle')} /> 
+        <BetterButton textColor='white' color={'green'} title='ДОБАВИТЬ' style={{borderColor:'green', width: '50%', marginHorizontal: 'auto', marginBottom: 10}} onPress={()=> navigation.navigate('AddArticle')} />
         <StatusBar style="auto" /> 
       </SafeAreaView>
   ); 

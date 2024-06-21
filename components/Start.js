@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image} from 'react-native';
-import { Button } from 'react-native-paper';
+import BetterButton from './platform_component/BetterButton'
 
 export default function Start({navigation}) {
   const loadScene = () => {
@@ -12,7 +12,7 @@ export default function Start({navigation}) {
       <Image source={require('../assets/plant_2820715 1.png')} />
       <Text style={styles.text}>Привет!</Text>
       <Text style={styles.text_simple}>С BE BETTER ты можешь стать лучше вместе с нашей планетой!</Text>
-      <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={loadScene}>СТАРТ</Button> 
+      <BetterButton style={[styles.button_style, {borderColor: 'green'}]} color={'green'} textColor={'white'} onPress={loadScene} title='СТАРТ'/> 
       <StatusBar style="auto" />
     </View>
   );

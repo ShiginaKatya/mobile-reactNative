@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
+import { Platform, StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
-import { Button } from 'react-native-paper';
+import BetterButton from './platform_component/BetterButton'
 
 
 
@@ -90,8 +90,8 @@ export default function Habit({route, navigation}) {
             </View>
             <StatusBar style="auto" />
         </SafeAreaView>
-        <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={navigateToEditScreen}>ИЗМЕНИТЬ</Button>
-        <Button style={styles.button_style} buttonColor={'gray'} textColor={'white'} onPress={deleteHabit}>УДАЛИТЬ</Button>
+        <BetterButton style={[styles.button_style, {borderColor: 'green'}]} textColor={'white'} color={'green'} title='ИЗМЕНИТЬ' onPress={navigateToEditScreen}/>
+        <BetterButton  onPress={deleteHabit} title='УДАЛИТЬ'  textColor='white' color={'gray'} style={[styles.button_style, {borderColor: 'gray'}]} />
     </ScrollView>
   );
 }
@@ -112,11 +112,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
   },
   habit_block: {
-    margin: 20
+    margin: 20,
   },
   habit_title: {
     fontSize: 25,
-    fontWeight: 'bold',
+    ...Platform.select({
+      ios:{
+        fontWeight: '500',
+      },
+      android:{
+        fontWeight: 'bold',
+      },
+      default:{
+        fontWeight: 'bold',
+      }
+    }),
     color: 'green'
   },
   habit_text:{
@@ -127,7 +137,10 @@ const styles = StyleSheet.create({
   button_style: {
     marginTop: 10,
     marginHorizontal: 'auto',
-    width: '50%'
+    width: 200
   },
+  button_delete: {
+    // backgroundColor: 'gray'
+  }
   
 });

@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import json_response from '../response/articles.js';
 import { FontAwesome } from '@expo/vector-icons';
+import BetterButton from './platform_component/BetterButton'
 
 
 
@@ -55,17 +56,17 @@ export default function Habits({navigation}) {
         <Text style={styles.text_title}>Эко-привычки</Text>  
         <FlatList data={habits} renderItem={({item}) =>( 
           <TouchableOpacity onPress={()=> navigation.navigate('Habit', item)}> 
-            <View style={styles.article}> 
+            <View style={styles.habit}> 
               <View style={styles.logo_habit}> 
                 <FontAwesome name={'leaf'} size={24} color="green" />
               </View> 
-              <View style={styles.article_block} >  
-                  <Text style={styles.article_title}>{ item.title} </Text> 
+              <View style={styles.habit_block} >  
+                  <Text style={styles.habit_title}>{ item.title} </Text> 
               </View> 
             </View>  
           </TouchableOpacity>
         )} /> 
-        <Button color={'green'} title='Добавить' onPress={()=> navigation.navigate('AddHabit')} /> 
+        <BetterButton textColor='white' color={'green'} title='ДОБАВИТЬ' style={{borderColor:'green', width: '50%', marginHorizontal: 'auto', marginBottom: 10}} onPress={()=> navigation.navigate('AddHabit')} /> 
         <StatusBar style="auto" /> 
       </View>
   ); 
@@ -81,7 +82,8 @@ const styles = StyleSheet.create({
   },
   button_style:{
     width: 50,
-    height: 20
+    height: 20,
+    margin: 'auto'
   },
   text_title: {
     color: 'green',
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     marginTop: 10
   },
-  article: {
+  habit: {
     width: 350,
     height: 60,
     flexDirection: 'row',
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginBottom: 10,
   },
-  article_title:{
+  habit_title:{
     fontSize: 15,
     textAlign: 'left',
     width: 260,

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Button, SafeAreaView, ScrollView } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, SafeAreaView, ScrollView } from 'react-native';
 import {AsyncStorage} from '@react-native-async-storage/async-storage';
 
 export default function Article({route}) {
@@ -52,11 +52,11 @@ export default function Article({route}) {
               uri: article.promo
             }} />
             <View style={styles.article_block}>
-                <Text style={styles.article_title}>{article.title}</Text>
+                <Text style={[styles.article_title, styles.bold_mobile]}>{article.title}</Text>
                 <Text style={styles.article_theme}>{article.theme}</Text>
-                <Text style={styles.article_group}>{article.partitle}</Text>
+                <Text style={[styles.article_group, styles.bold_mobile]}>{article.partitle}</Text>
                 <Text style={styles.article_text}>{article.text}</Text>
-                <Text style={styles.article_group}>СОВЕТЫ</Text>
+                <Text style={[styles.article_group, styles.bold_mobile]}>СОВЕТЫ</Text>
                 <View>
                   {article.advices.map((advice, index) => (
                     <View key={index} style={styles.advice}>
@@ -87,8 +87,7 @@ const styles = StyleSheet.create({
     margin: 20
   },
   article_title: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 27,
     color: 'green'
   },
   article_theme: {
@@ -98,7 +97,6 @@ const styles = StyleSheet.create({
   },
   article_group:{
     fontSize: 22,
-    fontWeight: 'bold',
     color: 'green',
     marginVertical: 10
   },
@@ -108,10 +106,23 @@ const styles = StyleSheet.create({
     margin: 10
   },
   article_text:{
-    color: 'gray'
+    color: 'gray',
   },
   advice_text: {
     color: 'gray'
+  },
+  bold_mobile:{
+    ...Platform.select({
+      ios:{
+        fontWeight: '500',
+      },
+      android:{
+        fontWeight: 'bold',
+      },
+      default:{
+        fontWeight: 'bold',
+      }
+    }),
   }
   
   

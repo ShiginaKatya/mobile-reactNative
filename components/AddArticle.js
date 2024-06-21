@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StatusBar, StyleSheet, ScrollView, Image} from 'react-native';
+import { Platform, View, Text, StatusBar, StyleSheet, ScrollView, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
-import { TextInput, Button } from 'react-native-paper';
+import BetterButton from './platform_component/BetterButton'
+import BetterTextInput from './platform_component/BetterTextInput'
 
 export default function AddArticle({ navigation }){
   const [title, setTitle] = useState('');
@@ -80,64 +81,47 @@ export default function AddArticle({ navigation }){
     <View style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.text}>BE BETTER</Text>
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
-          style={styles.input}
+        <BetterTextInput
           label='Заголовок'
           placeholder="Введите заголовок статьи"
-          value={title}
-          onChangeText={title => setTitle(title)}
+          value={this.title}
+          onValueChange={title => setTitle(title)}
         />
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
-          style={styles.input}
+        <BetterTextInput
           label='Подзаголовок'
           placeholder="Введите подзаголовок статьи"
-          value={partitle}
-          onChangeText={partitle => setPartitle(partitle)}
+          value={this.partitle}
+          onValueChange={partitle => setPartitle(partitle)}
         />
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
+        <BetterTextInput
           label='Текст'
-          style={[styles.input, styles.contentInput]}
+          style={styles.contentInput}
           placeholder="Введите текст статьи"
-          value={text}
-          onChangeText={text => setText(text)}
+          value={this.text}
+          onValueChange={text => setText(text)}
           multiline
         />
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
+        <BetterTextInput
           label='Тема'
-          style={styles.input}
           placeholder="Введите тему статьи"
-          value={theme}
-          onChangeText={theme => setTheme(theme)}
+          value={this.theme}
+          onValueChange={theme => setTheme(theme)}
         />
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
+        <BetterTextInput
           label='Автор'
-          style={styles.input}
           placeholder="Введите автора статьи"
-          value={author}
-          onChangeText={author => setAuthor(author)}
+          value={this.author}
+          onValueChange={author => setAuthor(author)}
         />
         {promo && <Image source={{ uri: promo }} style={styles.image} />}
-        <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={handleImagePicker}>ВЫБРАТЬ ИЗОБРАЖЕНИЕ</Button>
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
+        <BetterButton style={[styles.button_style,{borderColor: 'green'} ]} color={'green'} textColor={'white'} onPress={handleImagePicker} title='ВЫБРАТЬ ИЗОБРАЖЕНИЕ'/>
+        <BetterTextInput
           label='Cоветы(разделяй запятыми)'
-          style={[styles.input]}
           placeholder="Введите советы"
-          value={advices}
-          onChangeText={advices => setAdvices(advices)}
+          value={this.advices}
+          onValueChange={advices => setAdvices(advices)}
         />
-        <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={handleSaveArticle}>ДОБАВИТЬ</Button>
+        <BetterButton style={[styles.button_style,{borderColor: 'green'} ]} color={'green'} textColor={'white'} onPress={handleSaveArticle} title='ДОБАВИТЬ'/>
         <StatusBar style="auto" />
       </ScrollView>
     </View> 
@@ -158,7 +142,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
   },
   button_style: {
-    marginBottom: 16,
+    ...Platform.select({
+      ios:{
+        marginVertical: 16,
+      },
+      android:{
+        marginBottom: 16,
+      },
+      default:{
+        marginBottom: 16,
+      }
+    }),
     marginHorizontal: 'auto',
     width: '50%'
   },

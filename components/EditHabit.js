@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TextInput, Button } from 'react-native-paper';
+import BetterButton from './platform_component/BetterButton'
+import BetterTextInput from './platform_component/BetterTextInput'
 
 export default function EditHabit({ route, navigation }){
     const { habit } = route.params // Добавляем значение по умолчанию, если route.params является undefined
@@ -32,27 +33,22 @@ export default function EditHabit({ route, navigation }){
     <View style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.text}>BE BETTER</Text>
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
-          style={styles.input}
+        <BetterTextInput
           label='Привычка'
           placeholder="Введите привычку "
           value={editedHabit.title}
-          onChangeText={(title) => setEditedHabit({ ...editedHabit, title })}
+          onValueChange={(title) => setEditedHabit({ ...editedHabit, title })}
         />
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
+        <BetterTextInput
           label='Описание'
-          style={[styles.input, styles.contentInput]}
+          style={styles.contentInput}
           placeholder="Введите описание привычки"
           value={editedHabit.description}
-          onChangeText={(description) => setEditedHabit({ ...editedHabit, description })}
+          onValueChange={(description) => setEditedHabit({ ...editedHabit, description })}
           multiline
         />
-        <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={updateHabit}>СОХРАНИТЬ</Button>
-        <Button style={styles.button_style} buttonColor={'gray'} textColor={'white'} onPress={() => navigation.goBack()}>ОТМЕНА</Button>
+        <BetterButton style={[styles.button_style, {borderColor: 'green'}]} color={'green'} textColor={'white'} onPress={updateHabit} title='СОХРАНИТЬ'/>
+        <BetterButton style={[styles.button_style, {borderColor: 'gray'}]} color={'gray'} textColor={'white'} onPress={() => navigation.goBack()} title='ОТМЕНА'/>
         <StatusBar style="auto" />
       </ScrollView>
     </View> 
@@ -73,7 +69,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
   },
   button_style: {
-    marginBottom: 16,
+    marginTop: 10,
     marginHorizontal: 'auto',
     width: '50%'
   },
@@ -85,12 +81,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginBottom: 16,
     marginHorizontal: 16
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginHorizontal: 'auto',
-    marginVertical: 10,
   },
   contentInput: {
     height: 100,

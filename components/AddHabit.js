@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
+import { Platform, View, Text, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TextInput, Button } from 'react-native-paper';
+import BetterButton from './platform_component/BetterButton'
+import BetterTextInput from './platform_component/BetterTextInput'
 
 export default function AddHabit({navigation }){
     const [title, setTitle] = useState('');
@@ -40,26 +41,22 @@ export default function AddHabit({navigation }){
     <View style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.text}>BE BETTER</Text>
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
-          style={styles.input}
+        <BetterTextInput
           label='Привычка'
           placeholder="Введите привычку "
-          value={title}
-          onChangeText={title => setTitle(title)}
+          value={this.title}
+          style={styles.input}
+          onValueChange={title => setTitle(title)}
         />
-        <TextInput
-          activeOutlineColor='green'
-          mode='outlined'
+        <BetterTextInput
           label='Описание'
           style={[styles.input, styles.contentInput]}
           placeholder="Введите описание привычки"
-          value={description}
-          onChangeText={description => setDescription(description)}
+          value={this.description}
+          onValueChange={description => setDescription(description)}
           multiline
         />
-        <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={handleSaveHabit}>ДОБАВИТЬ</Button>
+        <BetterButton style={[styles.button_style, {borderColor: 'green'}]} textColor={'white'} color={'green'} title='ДОБАВИТЬ' onPress={handleSaveHabit}/>
         <StatusBar style="auto" />
       </ScrollView>
     </View> 
@@ -80,7 +77,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
   },
   button_style: {
-    marginBottom: 16,
+    ...Platform.select({
+      ios:{
+        marginVertical: 16,
+      },
+      android:{
+        marginBottom: 16,
+      },
+      default:{
+        marginBottom: 16,
+      }
+    }),
     marginHorizontal: 'auto',
     width: '50%'
   },
@@ -92,12 +99,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginBottom: 16,
     marginHorizontal: 16
-  },
-  image: {
-    width: 200,
-    height: 200,
-    marginHorizontal: 'auto',
-    marginVertical: 10,
   },
   contentInput: {
     height: 100,
