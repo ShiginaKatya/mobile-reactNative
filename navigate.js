@@ -4,6 +4,11 @@ import Start from "./components/Start";
 import Article from "./components/Article";
 import Articles from "./components/Articles"
 import AddArticle from "./components/AddArticle"
+import Habits from "./components/Habits"
+import Habit from "./components/Habit"
+import EditHabit from "./components/EditHabit";
+import AddHabit from "./components/AddHabit";
+
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,6 +17,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 
 function MainTabs() {
     return (
@@ -26,7 +32,9 @@ function MainTabs() {
               iconName = 'home';
             } else if (route.name === 'Articles') {
               iconName = 'list';
-            } 
+            } else if (route.name === 'Habits') {
+              iconName = 'leaf'
+            }
             // Возвращаем компонент иконки FontAwesome
             return <FontAwesome name={iconName} size={size} color={color} />;
           },
@@ -41,6 +49,7 @@ function MainTabs() {
       >
         {/* // Определяем вкладки навигации и связываем их с компонентами */}
         <Tab.Screen name="Main" component={Main} />
+        <Tab.Screen name="Habits" component={Habits} />
         <Tab.Screen name="Articles" component={Articles} />
       </Tab.Navigator>
     );
@@ -49,7 +58,19 @@ function MainTabs() {
 export default function Navigate() {
 
     return <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: 'white',
+            },
+            headerTitleAlign: 'center',
+            headerTintColor: 'green',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontStyle: 'italic'
+            },
+          }}
+        >
             <Stack.Screen
                 name="Start"
                 component={Start}
@@ -58,7 +79,7 @@ export default function Navigate() {
             <Stack.Screen
                 name="Main"
                 component={MainTabs}
-                options={{title: 'Главная'}}
+                options={{title: 'BE BETTER'}}
              />
              {/* <Stack.Screen
                 name="Articles"
@@ -70,10 +91,25 @@ export default function Navigate() {
                 component={Article}
                 options={{title: 'Статья'}}
              />
+             <Stack.Screen
+                name="Habit"
+                component={Habit}
+                options={{title: 'Привычка'}}
+             />
             <Stack.Screen
                 name="AddArticle"
                 component={AddArticle}
                 options={{title: 'Добавить статью'}}
+             />
+             <Stack.Screen
+                name="AddHabit"
+                component={AddHabit}
+                options={{title: 'Добавить привычку'}}
+             />
+            <Stack.Screen
+                name="EditHabit"
+                component={EditHabit}
+                options={{title: 'Редактировать привычку'}}
              />
         </Stack.Navigator>
     </NavigationContainer>

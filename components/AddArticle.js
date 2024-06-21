@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, ScrollView, Image} from 'react-native';
+import { View, Text, StatusBar, StyleSheet, ScrollView, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
+import { TextInput, Button } from 'react-native-paper';
 
 export default function AddArticle({ navigation }){
   const [title, setTitle] = useState('');
@@ -9,7 +10,7 @@ export default function AddArticle({ navigation }){
   const [partitle, setPartitle] = useState('');
   const [text, setText] = useState('');
   const [author, setAuthor] = useState('');
-  const [advices, setAdvices] = useState([]);
+  const [advices, setAdvices] = useState();
   const [promo, setPromo] = useState('https://i.pinimg.com/474x/3c/9f/32/3c9f328f15f0bb980c163265fe0ee9e9.jpg'); 
   const [articles, setArticles] = useState([]);
 
@@ -76,63 +77,99 @@ export default function AddArticle({ navigation }){
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Название статьи"
-        value={title}
-        onChangeText={setTitle}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Подзаголовок статьи"
-        value={partitle}
-        onChangeText={setPartitle}
-      />
-      <TextInput
-        style={[styles.input, styles.contentInput]}
-        placeholder="Текст статьи"
-        value={text}
-        onChangeText={setText}
-        multiline
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Тема статьи"
-        value={theme}
-        onChangeText={setTheme}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Автор статьи"
-        value={author}
-        onChangeText={setAuthor}
-      />
-      {promo && <Image source={{ uri: promo }} style={styles.image} />}
-      <Button color={'green'} title="Выбрать изображение" onPress={handleImagePicker} />
-      <TextInput
-        style={[styles.input, styles.contentInput]}
-        placeholder="Советы (разделяйте запятыми)"
-        value={advices}
-        onChangeText={setAdvices}
-      />
-      <Button color={'green'} title="Добавить" onPress={handleSaveArticle} />
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView style={styles.container}>
+        <Text style={styles.text}>BE BETTER</Text>
+        <TextInput
+          activeOutlineColor='green'
+          mode='outlined'
+          style={styles.input}
+          label='Заголовок'
+          placeholder="Введите заголовок статьи"
+          value={title}
+          onChangeText={title => setTitle(title)}
+        />
+        <TextInput
+          activeOutlineColor='green'
+          mode='outlined'
+          style={styles.input}
+          label='Подзаголовок'
+          placeholder="Введите подзаголовок статьи"
+          value={partitle}
+          onChangeText={partitle => setPartitle(partitle)}
+        />
+        <TextInput
+          activeOutlineColor='green'
+          mode='outlined'
+          label='Текст'
+          style={[styles.input, styles.contentInput]}
+          placeholder="Введите текст статьи"
+          value={text}
+          onChangeText={text => setText(text)}
+          multiline
+        />
+        <TextInput
+          activeOutlineColor='green'
+          mode='outlined'
+          label='Тема'
+          style={styles.input}
+          placeholder="Введите тему статьи"
+          value={theme}
+          onChangeText={theme => setTheme(theme)}
+        />
+        <TextInput
+          activeOutlineColor='green'
+          mode='outlined'
+          label='Автор'
+          style={styles.input}
+          placeholder="Введите автора статьи"
+          value={author}
+          onChangeText={author => setAuthor(author)}
+        />
+        {promo && <Image source={{ uri: promo }} style={styles.image} />}
+        <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={handleImagePicker}>ВЫБРАТЬ ИЗОБРАЖЕНИЕ</Button>
+        <TextInput
+          activeOutlineColor='green'
+          mode='outlined'
+          label='Cоветы(разделяй запятыми)'
+          style={[styles.input]}
+          placeholder="Введите советы"
+          value={advices}
+          onChangeText={advices => setAdvices(advices)}
+        />
+        <Button style={styles.button_style} buttonColor={'green'} textColor={'white'} onPress={handleSaveArticle}>ДОБАВИТЬ</Button>
+        <StatusBar style="auto" />
+      </ScrollView>
+    </View> 
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: '#fff',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    padding: 8,
+  text: {
+    color: 'green',
+    textAlign: 'center',
+    padding: 5,
+    fontWeight: 'bold',
+    fontSize: 15,
+    fontFamily: 'Roboto',
+  },
+  button_style: {
     marginBottom: 16,
+    marginHorizontal: 'auto',
+    width: '50%'
+  },
+  input: {
+    // borderWidth: 1,
+    // borderColor: '#ccc',
+    // borderRadius: 4,
+    // padding: 8,
+    backgroundColor: 'white',
+    marginBottom: 16,
+    marginHorizontal: 16
   },
   image: {
     width: 200,
@@ -142,6 +179,5 @@ const styles = StyleSheet.create({
   },
   contentInput: {
     height: 100,
-    marginTop: 10
   },
 });

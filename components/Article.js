@@ -57,13 +57,13 @@ export default function Article({route}) {
                 <Text style={styles.article_group}>{article.partitle}</Text>
                 <Text style={styles.article_text}>{article.text}</Text>
                 <Text style={styles.article_group}>СОВЕТЫ</Text>
-                <View style={styles.advice}>
-                    <Image style={styles.advice_image} source={require('../assets/icon_advice.png')} />
-                    <Text style={styles.advice_text}>{article.advices[0]}</Text>
-                </View>
-                <View style={styles.advice}> 
-                    <Image style={styles.advice_image} source={require('../assets/icon_advice.png')} />
-                    <Text style={styles.advice_text}>{article.advices[1]}</Text>
+                <View>
+                  {article.advices.map((advice, index) => (
+                    <View key={index} style={styles.advice}>
+                      <Image style={styles.advice_image} source={require('../assets/icon_advice.png')} />
+                      <Text style={styles.advice_text}>{advice}</Text>
+                    </View>
+                  ))}
                 </View>
             </View>
             <StatusBar style="auto" />
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
   },
   article_image: {
     width: 400,
-    height: 320
+    height: 320,
+    marginHorizontal: 'auto',
   },
   article_block: {
     margin: 20
@@ -91,14 +92,15 @@ const styles = StyleSheet.create({
     color: 'green'
   },
   article_theme: {
-    fontSize: 12,
-    color: 'gray'
+    fontSize: 15,
+    color: 'gray',
+    marginTop: 10,
   },
   article_group:{
     fontSize: 22,
     fontWeight: 'bold',
     color: 'green',
-    marginVertical: 20
+    marginVertical: 10
   },
   advice: {
     flexDirection: 'row',

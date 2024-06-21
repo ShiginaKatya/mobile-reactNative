@@ -18,7 +18,7 @@ export default function Main({navigation}) {
  
             if (storedData !== null) { 
                 setData(JSON.parse(storedData)); 
-                console.log(storedData) 
+                // console.log(storedData) 
             } 
         } catch (error) { 
             console.error('error', error); 
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   text_title: {
     color: 'green',
     textAlign: 'center',
-    padding: 10,
+    padding: 8,
     fontSize: 25,
     fontWeight: 'bold'
   },
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginHorizontal: 'auto',
-    marginTop: 40
+    marginTop: 30
   },
   banner: {
     width: 350,
