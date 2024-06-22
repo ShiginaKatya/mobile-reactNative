@@ -10,10 +10,7 @@ export default function BetterButton({ onPress, title, style, color}){
       onPress={onPress}
       rounded
       style={[styles.button, style]}
-      
-      
       color ={color}
-
     >
       {title}
     </Button>

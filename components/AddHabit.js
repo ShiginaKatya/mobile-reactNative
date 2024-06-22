@@ -44,7 +44,7 @@ export default function AddHabit({navigation }){
         <BetterTextInput
           label='Привычка'
           placeholder="Введите привычку "
-          value={this.title}
+          value={title}
           style={styles.input}
           onValueChange={title => setTitle(title)}
         />
@@ -52,7 +52,7 @@ export default function AddHabit({navigation }){
           label='Описание'
           style={[styles.input, styles.contentInput]}
           placeholder="Введите описание привычки"
-          value={this.description}
+          value={description}
           onValueChange={description => setDescription(description)}
           multiline
         />

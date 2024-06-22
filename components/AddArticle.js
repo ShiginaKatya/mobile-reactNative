@@ -84,33 +84,33 @@ export default function AddArticle({ navigation }){
         <BetterTextInput
           label='Заголовок'
           placeholder="Введите заголовок статьи"
-          value={this.title}
+          value={title}
           onValueChange={title => setTitle(title)}
         />
         <BetterTextInput
           label='Подзаголовок'
           placeholder="Введите подзаголовок статьи"
-          value={this.partitle}
+          value={partitle}
           onValueChange={partitle => setPartitle(partitle)}
         />
         <BetterTextInput
           label='Текст'
           style={styles.contentInput}
           placeholder="Введите текст статьи"
-          value={this.text}
+          value={text}
           onValueChange={text => setText(text)}
           multiline
         />
         <BetterTextInput
           label='Тема'
           placeholder="Введите тему статьи"
-          value={this.theme}
+          value={theme}
           onValueChange={theme => setTheme(theme)}
         />
         <BetterTextInput
           label='Автор'
           placeholder="Введите автора статьи"
-          value={this.author}
+          value={author}
           onValueChange={author => setAuthor(author)}
         />
         {promo && <Image source={{ uri: promo }} style={styles.image} />}
@@ -118,7 +118,7 @@ export default function AddArticle({ navigation }){
         <BetterTextInput
           label='Cоветы(разделяй запятыми)'
           placeholder="Введите советы"
-          value={this.advices}
+          value={advices}
           onValueChange={advices => setAdvices(advices)}
         />
         <BetterButton style={[styles.button_style,{borderColor: 'green'} ]} color={'green'} textColor={'white'} onPress={handleSaveArticle} title='ДОБАВИТЬ'/>
