@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TextField } from 'react-native-ios-kit';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 
 
@@ -10,7 +9,9 @@ export default function BetterTextInput({ onValueChange, label, style, value}){
     <TextField
           style={[styles.input, style]}
           placeholder={label}
+        //   Подключение другой кнопки очистки
           clearButtonMode="always"
+        //   Отключение кнопки очищения поля, иконка которой не прогружается
           clearButton={false}
           value={value}
           onValueChange={onValueChange}

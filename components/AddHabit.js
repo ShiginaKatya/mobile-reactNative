@@ -91,15 +91,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     width: '50%'
   },
-  input: {
-    // borderWidth: 1,
-    // borderColor: '#ccc',
-    // borderRadius: 4,
-    // padding: 8,
-    backgroundColor: 'white',
-    marginBottom: 16,
-    marginHorizontal: 16
-  },
+  // input: {
+  //   // borderWidth: 1,
+  //   // borderColor: '#ccc',
+  //   // borderRadius: 4,
+  //   // padding: 8,
+  //   backgroundColor: 'white',
+  //   marginBottom: 16,
+  //   marginHorizontal: 16
+  // },
   contentInput: {
     height: 100,
   },

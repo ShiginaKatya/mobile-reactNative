@@ -28,7 +28,7 @@ function MainTabs() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             // Выбираем иконку в зависимости от названия вкладки
-            if (route.name === 'Main') {
+            if (route.name === 'Main-tab') {
               iconName = 'home';
             } else if (route.name === 'Articles') {
               iconName = 'list';
@@ -48,7 +48,8 @@ function MainTabs() {
         })}
       >
         {/* // Определяем вкладки навигации и связываем их с компонентами */}
-        <Tab.Screen name="Main" component={Main} />
+        {/* Изменяем имя компонента Главная с Main на Main-tab, для того, чтобы избежать накладки при навигации */}
+        <Tab.Screen name="Main-tab" component={Main} />
         <Tab.Screen name="Habits" component={Habits} />
         <Tab.Screen name="Articles" component={Articles} />
       </Tab.Navigator>
