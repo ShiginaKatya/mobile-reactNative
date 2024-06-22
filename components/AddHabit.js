@@ -10,33 +10,33 @@ export default function AddHabit({navigation }){
     const [habits, setHabits] = useState([]);
 
     const handleSaveHabit = async () => {
-        try {
-          // Получаем существующие статьи из AsyncStorage
-          const storedData = await AsyncStorage.getItem('habits');
-          let existingHabits = [];
-          if (storedData !== null) {
-            existingHabits = JSON.parse(storedData);
-          }
-           
-          // Создаем новую привычку
-          const newHabit = { title, description};
+      try {
+        // Получаем существующие привычки из AsyncStorage
+        const storedData = await AsyncStorage.getItem('habits');
+        let existingHabits = [];
+        if (storedData !== null) {
+          existingHabits = JSON.parse(storedData);
+        }
     
-          // Добавляем новую привычку в массив
+        // Создаем новую привычку, только если title и description не пустые
+        if (title.trim() !== '' && description.trim() !== '') {
+          const newHabit = { title, description };
           const updatedHabits = [...existingHabits, newHabit];
-          setHabits(updatedHabits);
-    
-          // Сохраняем обновленный массив статей в AsyncStorage
+
+          // console.log('Saving habit:', JSON.stringify(updatedHabits));
+          // Сохраняем обновленный массив привычек в AsyncStorage
           await AsyncStorage.setItem('habits', JSON.stringify(updatedHabits));
-    
           // Очищаем поля формы
           setTitle('');
           setDescription('');
+    
           // Переходим обратно на главный экран
           navigation.goBack();
-        } catch (error) {
-          console.error('Error saving habit:', error);
         }
-      };
+      } catch (error) {
+        console.error('Error saving habit:', error);
+      }
+    };
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container}>
