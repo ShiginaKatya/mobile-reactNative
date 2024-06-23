@@ -41,12 +41,12 @@ export default function Articles({navigation}) {
   }, []);
 
   // Подписка на событие активации экрана (когда пользователь переходит на этот экран)
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     // Загружаем данные из AsyncStorage при активации экрана
-  //     fetchDataFromStorage();
-  //   }, [])
-  // );  
+  useFocusEffect(
+    useCallback(() => {
+      // Загружаем данные из AsyncStorage при активации экрана
+      fetchDataFromStorage();
+    }, [])
+  );  
  
   return ( 
 
