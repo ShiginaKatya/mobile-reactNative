@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Platform, View, Text, StatusBar, StyleSheet, ScrollView, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 import BetterButton from './platform_component/BetterButton'
 import BetterTextInput from './platform_component/BetterTextInput'
 
